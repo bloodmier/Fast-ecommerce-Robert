@@ -74,13 +74,10 @@ export const Cartpage = () => {
         clientSecret: "",
       };
       const paymentresponse = await GetPaymentFromStripe(Stripeobject);
-      console.log(paymentresponse);
-
       if (!paymentresponse.clientSecret) {
         throw new Error("Failed to fetch client secret");
       }
       setClientSecret(paymentresponse.clientSecret);
-      console.log(paymentresponse.clientSecret);
     } catch (error) {
       console.error("Error fetching client secret:", error);
     }
