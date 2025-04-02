@@ -35,7 +35,7 @@ export const Homepage = () => {
           —because time waits for no one!
         </h2>
         <Button
-          href="/products"
+          href="https://fast-ecommerce-robert.vercel.app/products"
           variant="contained"
           size="large"
           sx={{ position: "absolute", right: "150px", bottom: "-50px" }}
