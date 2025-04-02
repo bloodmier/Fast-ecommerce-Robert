@@ -1,5 +1,5 @@
 import { Modal, TextField, Button } from "@mui/material";
-import { useState, ChangeEvent } from "react";
+import { ChangeEvent } from "react";
 import { Icustomer } from "../models/Icustomer";
 
 interface CustomerModalProps {

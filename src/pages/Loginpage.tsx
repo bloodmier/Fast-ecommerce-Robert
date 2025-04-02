@@ -35,7 +35,7 @@ export const Loginpage = () => {
         margin: "auto",
         backgroundColor:"white"
       }}
-    >
+    >{errorMessage && <p>{errorMessage}</p>}
       <Typography variant="h4" component="h1" gutterBottom>
         Authentication
       </Typography>

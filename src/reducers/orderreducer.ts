@@ -1,5 +1,5 @@
 
-import { IOrder, IOrderWithCustomer } from "../models/Iorder";
+import { IOrder } from "../models/Iorder";
 
 export interface IAction {
     type: IActiontype;
