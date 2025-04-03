@@ -1,25 +1,53 @@
 import SearchIcon from "@mui/icons-material/Search";
-import { FormEvent, useRef, useState } from "react";
+import { FormEvent, MouseEventHandler, useRef, useState } from "react";
 export const Searchapi = () => {
   const [searchinput, setSearchinput] = useState<string>("");
   const [isFocused, setIsFocused] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
 
-  const hanldemouseover = () => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+
+  const handleclick = () => {
+    
+    if (!isFocused) {
     if (inputRef.current) {
       inputRef.current.focus();
     }
     setIsFocused(true);
+    
+    console.log("jag clickas");
+    
+} else {
+    console.log("kalle");
+    
+}
+
+
   };
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    if (e.relatedTarget === buttonRef.current) {
+      return;
+    }
+    setIsFocused(false); 
+  };
+
+
+
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    if (inputRef.current) {
+        inputRef.current.focus();
+      }
     console.log("hej");
+    
   };
 
   return (
     <div style={{ position: "absolute", right: "100px" }}>
-      <form
+      <div
         style={{
           display: "flex",
           justifyContent: "center",
@@ -30,6 +58,7 @@ export const Searchapi = () => {
           margin: "0",
           padding: "0",
         }}
+        onBlur={handleBlur}
         onSubmit={handleSubmit}
       >
         <input
@@ -37,7 +66,7 @@ export const Searchapi = () => {
           type="text"
           placeholder={isFocused ? "Type to Search..." : ""}
           style={{
-            zIndex: "1",
+            zIndex: "2",
             height: isFocused ? "30px" : "0px",
             width: isFocused ? "300px" : "0px",
             border: "none",
@@ -54,13 +83,14 @@ export const Searchapi = () => {
           }}
           onChange={(e) => setSearchinput(e.target.value)}
           onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
+          onBlur={handleBlur}
         />
-
+        
         <button
-          type="submit"
+          type="button"
+          ref={buttonRef}
           style={{
-            zIndex: "2",
+            zIndex: "40",
             width: "50px",
             height: "50px",
             borderStyle: "none",
@@ -73,8 +103,7 @@ export const Searchapi = () => {
             color: "#000000",
             backgroundColor: "transparent",
           }}
-          disabled={!isFocused}
-          onMouseOver={hanldemouseover}
+          onClick={handleclick}
         >
           <SearchIcon
             sx={{
@@ -89,7 +118,7 @@ export const Searchapi = () => {
             }}
           />
         </button>
-      </form>
+      </div>
     </div>
   );
 };
