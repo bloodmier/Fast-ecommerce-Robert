@@ -8,6 +8,7 @@ import logoimg from "../assets/logo.png";
 import productsimg from "../assets/products-icon.png";
 import productsimghover from "../assets/products-icon-hover.png";
 import { Footercontent } from "../components/footercontent";
+import { Searchapi } from "../components/Searchapi";
 
 export const Layout = () => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
@@ -117,7 +118,7 @@ export const Layout = () => {
             Fast
           </Typography>
         </Box>
-
+            <Searchapi/>
         
           <NavLink
             to={"/products"}
