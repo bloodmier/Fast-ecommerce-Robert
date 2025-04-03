@@ -1,14 +1,15 @@
 import SearchIcon from "@mui/icons-material/Search";
-import { FormEvent, MouseEventHandler, useRef, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
+import { Searchdropdownbox } from "./Searchdropdownbox";
 export const Searchapi = () => {
   const [searchinput, setSearchinput] = useState<string>("");
   const [isFocused, setIsFocused] = useState(false);
-
+  const [searchDropdown, setSearchDropdown] = useState<boolean>(false)
   const inputRef = useRef<HTMLInputElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
 
-  const handleclick = () => {
+  const handleclick = async () => {
     
     if (!isFocused) {
     if (inputRef.current) {
@@ -19,6 +20,7 @@ export const Searchapi = () => {
     console.log("jag clickas");
     
 } else {
+    setSearchDropdown(true)
     console.log("kalle");
     
 }
@@ -27,14 +29,13 @@ export const Searchapi = () => {
   };
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    if (e.relatedTarget === buttonRef.current) {
+    if (
+        e.relatedTarget === buttonRef.current
+    ) {
       return;
     }
     setIsFocused(false); 
   };
-
-
-
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -66,6 +67,8 @@ export const Searchapi = () => {
           type="text"
           placeholder={isFocused ? "Type to Search..." : ""}
           style={{
+            position:"absolute",
+            right:"0",
             zIndex: "2",
             height: isFocused ? "30px" : "0px",
             width: isFocused ? "300px" : "0px",
@@ -118,7 +121,12 @@ export const Searchapi = () => {
             }}
           />
         </button>
+        
+      <Searchdropdownbox 
+ isOpen={searchDropdown} onClose={()=>setSearchDropdown(false)}></Searchdropdownbox>
+      
       </div>
     </div>
   );
 };
+
