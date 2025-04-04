@@ -1,14 +1,20 @@
 import SearchIcon from "@mui/icons-material/Search";
 import { FormEvent, useRef, useState } from "react";
 import { Searchdropdownbox } from "./Searchdropdownbox";
+import { SerchapiGoogle } from "../service/Searchservice";
+import { Igoogleitem, IgoogleSearch } from "../models/Igoogleitem";
 export const Searchapi = () => {
   const [searchinput, setSearchinput] = useState<string>("");
+  const [searchItems, setSearchItems] = useState<Igoogleitem[]>(JSON.parse(localStorage.getItem("search") || "[]"))
   const [isFocused, setIsFocused] = useState(false);
   const [searchDropdown, setSearchDropdown] = useState<boolean>(false)
   const inputRef = useRef<HTMLInputElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
+  localStorage.setItem("search", JSON.stringify(searchItems));
 
+ console.log(searchItems);
+ 
   const handleclick = async () => {
     
     if (!isFocused) {
@@ -21,10 +27,21 @@ export const Searchapi = () => {
     
 } else {
     setSearchDropdown(true)
-    console.log("kalle");
+   try {
+    const response = await SerchapiGoogle<IgoogleSearch>(searchinput,1)
+    localStorage.removeItem("search")
+    setSearchItems(response.items)
     
-}
+   } catch (error:unknown) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+  } else {
+      throw new Error("Ett okänt fel inträffade");
+  }
 
+   }
+}
+/*1,21,31,91,  */
 
   };
 
@@ -123,8 +140,7 @@ export const Searchapi = () => {
         </button>
         
       <Searchdropdownbox 
- isOpen={searchDropdown} onClose={()=>setSearchDropdown(false)}></Searchdropdownbox>
-      
+ isOpen={searchDropdown} onClose={()=>setSearchDropdown(false)} Searchitems={searchItems}></Searchdropdownbox>
       </div>
     </div>
   );
