@@ -1,38 +1,19 @@
-import { Igoogleitem } from "../models/Igoogleitem";
 import "../sass/Searchdropdown.scss";
 import Notfound from "../assets/Img-not-found.jpg";
-import { useProducts } from "../hooks/useProducts";
+import { IProduct } from "../models/Iproduct";
 interface ISearchdropdownbox {
-  Searchitems: Igoogleitem[];
+  rightproducts: IProduct[];
   isOpen: boolean;
   onClose: () => void;
+  onClick: () => void;
 }
 
 export const Searchdropdownbox = ({
   isOpen,
   onClose,
-  Searchitems,
+  rightproducts,
+  onClick
 }: ISearchdropdownbox) => {
-
-
-const {products} = useProducts()
-
- /* const extractCode = (text:string) => {
-  const match = text.match(/[A-Z0-9-]{3,}/); 
-  return match ? match[0] : null; 
-}; */
-const extractCode = (text:string) => {
-  if (text.toLowerCase().includes("milwaukee")) {
-      // Specialregex för Milwaukee
-      const match = text.match(/M\d{2}\s[A-Z]+-\d+/); // Matchar t.ex. "M18 BDD-0"
-      return match ? match[0] : null;
-  } else {
-      // Standardregex för andra produkter
-      const match = text.match(/[A-Z0-9-]{3,}/); // Matchar t.ex. "DCD800NT-XJ" eller "DS18DC"
-      return match ? match[0] : null;
-  }
-};
-
 
 
   return (
@@ -69,7 +50,7 @@ const extractCode = (text:string) => {
             }}
             onMouseDown={(e) => e.stopPropagation()}
           >
-            {Searchitems.length > 0 ? (
+            {rightproducts && rightproducts.length > 0 ? (
               <ul
                 style={{
                   width: "100%",
@@ -78,29 +59,11 @@ const extractCode = (text:string) => {
                   padding: 0,
                 }}
               >
-                {Searchitems.map((i) => {
-                 /*  const cleanedTitle = i.title.replace(/\| Proffsmagasinet$/, "").replace(/\.\.\./g, "").trim(); */
-
-                  const apicode = extractCode(i.title)
-                  
-                  
-                 
-                  
-                
-      
-                   const rightproduct = products.find((p)=> {return apicode ? p.name.includes(apicode) : null})
-                 
-                  
-                   
-            
-                   const id = rightproduct?.id
-                  
-                   
-                  
-                  return (
-                    rightproduct && 
-                    <a href={`/products/${id}`} key={i.title}><li
-                      
+                {rightproducts.map((rightproduct) => {
+                  if (!rightproduct) return
+                  const id = rightproduct?.id
+                  return rightproduct && (
+                    <a href={`/products/${id}`} key={rightproduct.id}><li
                       style={{
                         height: "5rem",
                         maxWidth: "100%",
@@ -124,7 +87,7 @@ const extractCode = (text:string) => {
                 })}
               </ul>
             ) : (
-              <p>Couldn't find any search results!</p>
+              <p onClick={onClick}>Couldn't find any search results!</p>
             )}
           </div>
         </>

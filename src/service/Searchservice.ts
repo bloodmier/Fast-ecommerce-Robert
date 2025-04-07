@@ -7,7 +7,7 @@ export const SerchapiGoogle = async <T> (search:string,pagenumber:number) => {
     const response = getdata<T>(GOOGLE_SEARCH_API,{
         params: {
           q: search,
-          key: "AIzaSyDSVPcXf9tWBhaFm2kI7qT7KVJFj24JhYw",
+          key: "AIzaSyBNJRjKp6YPUbhlUBqI_b_91NcBGYuNJ_I",
           cx: "671aa029c22194a16",
           start:pagenumber,
         },
@@ -15,3 +15,9 @@ export const SerchapiGoogle = async <T> (search:string,pagenumber:number) => {
     )
     return response
 }
+
+
+
+
+
+// AIzaSyDSVPcXf9tWBhaFm2kI7qT7KVJFj24JhYw

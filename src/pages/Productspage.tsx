@@ -148,7 +148,7 @@ export const Productspage = () => {
                 variant="outlined"
                 value={quantities[product.id] || 1}
                 onChange={(e) => handleQuantitychange(e, product.id)}
-                sx={{ width: "100%" }}
+                sx={{ width: "100%",zIndex:0 }}
               />
               <Box
                 sx={{
