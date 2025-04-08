@@ -1,8 +1,9 @@
 import "../sass/Searchdropdown.scss";
 import Notfound from "../assets/Img-not-found.jpg";
 import { IProduct } from "../models/Iproduct";
+import { Box, List, ListItem, ListItemAvatar, Avatar, ListItemText, Typography } from "@mui/material";
 interface ISearchdropdownbox {
-  rightproducts: IProduct[];
+  products: IProduct[];
   isOpen: boolean;
   onClose: () => void;
   onClick: () => void;
@@ -11,7 +12,7 @@ interface ISearchdropdownbox {
 export const Searchdropdownbox = ({
   isOpen,
   onClose,
-  rightproducts,
+  products,
   onClick
 }: ISearchdropdownbox) => {
 
@@ -20,25 +21,27 @@ export const Searchdropdownbox = ({
     <>
       {isOpen && (
         <>
-          <div
+          <Box
             onClick={onClose}
-            style={{
+            sx={{
               position: "fixed",
               top: 0,
               left: 0,
               width: "100vw",
               height: "100vh",
               zIndex: 999,
+              backgroundColor: "rgba(0, 0, 0, 0.5)",
             }}
             onMouseDown={(e) => e.stopPropagation()}
           />
-          <div
-            style={{
+          <Box
+            sx={{
               position: "absolute",
               top: "32px",
-              right: "0",
-              width: "400px",
-              maxWidth: "400px",
+              right: {xs:"unset", sm:0},
+              left:{xs:"-60px", sm:"unset"},
+              width: { xs: "100dvw", sm: "400px" }, // Responsiv bredd
+              maxWidth: { xs: "none", sm: "400px" },
               backgroundColor: "white",
               zIndex: 1000,
               borderRadius: "4px",
@@ -50,49 +53,47 @@ export const Searchdropdownbox = ({
             }}
             onMouseDown={(e) => e.stopPropagation()}
           >
-            {rightproducts && rightproducts.length > 0 ? (
-              <ul
-                style={{
-                  width: "100%",
-                  maxWidth: "400px",
-                  margin: 0,
-                  padding: 0,
-                }}
-              >
-                {rightproducts.map((rightproduct) => {
-                  if (!rightproduct) return
-                  const id = rightproduct?.id
-                  return rightproduct && (
-                    <a href={`/products/${id}`} key={rightproduct.id}><li
-                      style={{
-                        height: "5rem",
-                        maxWidth: "100%",
-                        display: "flex",
-                        justifyContent: "center",
-                        gap: "5px",
-                        margin: "3px",
-                        padding:"5px",
-                        borderBottom: "1px solid black",
-                      }}
-                    >
-                      <img
-                        src={rightproduct ? rightproduct.image : Notfound}
-                        
-                        alt={rightproduct.name}
-                      />
-                      <h5>{rightproduct.name}</h5>
-                      
-                    </li></a>
+            {products && products.length > 0 ? (
+              <List sx={{ width: "100%", maxWidth: "400px", padding: 0 }}>
+                {products.map((rightproduct) => {
+                  if (!rightproduct) return null;
+                  const id = rightproduct?.id;
+                  return (
+                    <a href={`/products/${id}`} key={rightproduct.id} style={{ textDecoration: "none" }}>
+                      <ListItem
+                        sx={{
+                          height: "5rem",
+                          display: "flex",
+                          justifyContent: "center",
+                          gap: "5px",
+                          margin: "3px",
+                          padding: "5px",
+                          borderBottom: "1px solid black",
+                        }}
+                      >
+                        <ListItemAvatar>
+                          <Avatar
+                            src={rightproduct.image || Notfound}
+                            alt={rightproduct.name}
+                            sx={{ width: "3rem", height: "3rem" }}
+                          />
+                        </ListItemAvatar>
+                        <ListItemText primary={rightproduct.name} />
+                      </ListItem>
+                    </a>
                   );
                 })}
-              </ul>
+              </List>
             ) : (
-              <p onClick={onClick}>Couldn't find any search results!</p>
+              <Typography onClick={onClick} sx={{ textAlign: "center", color: "red" }}>
+                Couldn't find any search results!
+              </Typography>
             )}
-          </div>
+          </Box>
         </>
       )}
     </>
   );
 };
+
 

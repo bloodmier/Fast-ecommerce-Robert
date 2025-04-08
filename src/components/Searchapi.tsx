@@ -1,11 +1,12 @@
 import SearchIcon from "@mui/icons-material/Search";
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Searchdropdownbox } from "./Searchdropdownbox";
 import { SerchapiGoogle } from "../service/Searchservice";
 import { Igoogleitem, IgoogleSearch } from "../models/Igoogleitem";
 import { useProducts } from "../hooks/useProducts";
 import { IProduct } from "../models/Iproduct";
 import { Loading } from "./Loading";
+import { Box, InputBase, IconButton } from "@mui/material";
 export const Searchapi = () => {
   const [searchinput, setSearchinput] = useState<string>("");
   const [searchItems, setSearchItems] = useState<Igoogleitem[]>([]);
@@ -15,21 +16,9 @@ export const Searchapi = () => {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const { products } = useProducts();
   const [isloading, setIsloading] = useState<boolean>(false);
-  const rightproducts: IProduct[] = searchItems.map((i) => {
-      const apicode = extractCode(i.title);
-      const matchedproduct = products.find((p) => {
-        return apicode ? p.name.includes(apicode) : null;
-      });
-      return matchedproduct || null;
-    }).filter((p) => p !== null);
 
-  
+ 
 
-  useEffect(() => {
-    if (!searchinput || searchinput.trim().length === 0) {
-      setSearchDropdown(false);
-    }
-  }, [searchinput]);
 
   const extractCode = (text: string) => {
     if (text.toLowerCase().includes("milwaukee")) {
@@ -40,6 +29,14 @@ export const Searchapi = () => {
       return match ? match[0] : null;
     }
   };
+
+  const rightproducts: IProduct[] = searchItems.map((i) => {
+    const apicode = extractCode(i.title);
+    const matchedproduct = products.find((p) => {
+      return apicode ? p.name.includes(apicode) : null;
+    });
+    return matchedproduct || null;
+  }).filter((p) => p !== null);
 
 
   const handleNoresults = () => {
@@ -94,101 +91,90 @@ export const Searchapi = () => {
     setIsFocused(false);
   };
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-  };
-
   return (
-    <div style={{ position: "absolute", right: "100px" }}>
-      <div
-        style={{
+    <Box sx={{ position: "absolute", right: {xs:"unset", sm:"100px"}, left: {xs:"60px", sm:"unset"} }}>
+      <Box
+        sx={{
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
           position: "relative",
           width: "fit-content",
           height: "fit-content",
-          margin: "0",
-          padding: "0",
+          margin: 0,
+          padding: 0,
         }}
         onBlur={handleBlur}
-        onSubmit={handleSubmit}
+        onSubmit={(e) => e.preventDefault()} 
       >
-        <input
-          ref={inputRef}
-          type="text"
+
+        <InputBase
+          inputRef={inputRef}
           placeholder={isFocused ? "Type to Search..." : ""}
-          autoComplete="true"
           value={searchinput}
-          style={{
+          onChange={(e) => setSearchinput(e.target.value)}
+          onFocus={() => setIsFocused(true)}
+          onBlur={handleBlur}
+          sx={{
             position: "absolute",
-            right: "0",
-            zIndex: "1001",
-            height: isFocused ? "30px" : "0px",
+            right: {xs:"unset", sm:"0"},
+            left: {xs:"10px", sm:"unset"},
+            zIndex: 1001,
+            height: isFocused ? "50px" : "0px",
             width: isFocused ? "300px" : "0px",
             border: "none",
             padding: "10px",
             fontSize: "18px",
             letterSpacing: "2px",
             outline: "none",
-            borderRadius: !isFocused ? "0px" : "25px",
-            transition: "all .5s ease-in-out",
-            backgroundColor: !isFocused ? "transparent" : "white",
-            paddingRight: "40px",
+            borderRadius: isFocused ? "25px" : "0px",
+            transition: "all 0.5s ease-in-out",
+            backgroundColor: isFocused ? "white" : "transparent",
             color: "#000000",
+            paddingRight: "40px",
             borderBottom: isFocused ? "1px solid rgba(255,255,255,.5)" : "none",
           }}
-          onChange={(e) => setSearchinput(e.target.value)}
-          onFocus={() => setIsFocused(true)}
-          onBlur={handleBlur}
         />
-
-        <button
-          type="button"
+        <IconButton
           ref={buttonRef}
-          style={{
-            zIndex: "1002",
-            width: "50px",
-            height: "50px",
+          onClick={handleclick}
+          sx={{
+            zIndex: 1002,
+            width: "48px",
+            height: "48px",
             borderStyle: "none",
-            fontSize: "20px",
+            fontSize: "18px",
             fontWeight: "bold",
             cursor: "pointer",
             borderRadius: "50%",
             position: "absolute",
-            right: "6px",
-            color: "#000000",
-            backgroundColor: "transparent",
+            right: "2px",
+            backgroundColor: isFocused ? "var(--accent-color)" : "transparent",
           }}
-          onClick={handleclick}
         >
-          {!isloading ? <SearchIcon
-            sx={{
-              transition:
-                "background-color 0.3s ease-in, background-color 0.5s ease-out",
-
-              fontSize: "2.3rem",
-              color: isFocused ? "black" : "var(--surface-color)",
-              backgroundColor: isFocused
-                ? "var(--accent-color)"
-                : "transparent",
-              borderRadius: "50%",
-              padding: "5px",
-              margin: "1px",
-            }}
-          /> : <Loading/> }
-        </button>
-
+          {!isloading ? (
+            <SearchIcon
+              sx={{
+                transition: "background-color 0.3s ease-in, 0.5s ease-out",
+                fontSize: "2.3rem",
+                color: isFocused ? "black" : "var(--surface-color)",
+              }}
+            />
+          ) : (
+            <Loading />
+          )}
+        </IconButton>
         <Searchdropdownbox
           onClick={handleNoresults}
           isOpen={searchDropdown}
-          onClose={() => (setSearchDropdown(false), setSearchItems([]))}
-          rightproducts={rightproducts}
-        ></Searchdropdownbox>
-      </div>
-    </div>
+          onClose={() => {
+            setSearchDropdown(false);
+            setSearchItems([]);
+          }}
+          products={rightproducts}
+        />
+      </Box>
+    </Box>
   );
 };
+
