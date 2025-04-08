@@ -1,7 +1,7 @@
 import { Box, Link, Typography, useMediaQuery } from "@mui/material"
 import footerimg from "../assets/footer-styling.png"
 import footerimgleft from "../assets/footer-styling-left.png"
-import { Footerdropdown } from "./footerdropdown";
+import { Footerdropdown } from "./Footerdropdown";
 export const Footercontent = () => {
   const isSmallScreen = useMediaQuery('(max-width:800px)');
 
