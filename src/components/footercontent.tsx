@@ -1,7 +1,9 @@
-import { Box, Link, Typography } from "@mui/material"
+import { Box, Link, Typography, useMediaQuery } from "@mui/material"
 import footerimg from "../assets/footer-styling.png"
 import footerimgleft from "../assets/footer-styling-left.png"
+import { Footerdropdown } from "./footerdropdown";
 export const Footercontent = () => {
+  const isSmallScreen = useMediaQuery('(max-width:800px)');
 
 
     return(
@@ -9,7 +11,7 @@ export const Footercontent = () => {
         display:"flex",
         position:"relative",
         width:"100%",
-        height:"100%",
+        minHeight:"12rem",
         justifyContent:"center",
         alignItems:"flex-start",
         color:"var(--text-color-blue)",
@@ -28,6 +30,8 @@ export const Footercontent = () => {
             bottom:"0",
             height:"16rem"
         }}></img>
+        {!isSmallScreen ? (
+          <>
         <Box zIndex={"1"} paddingTop={"20px"}>
           <Typography variant="h6" gutterBottom color="var(--accent-color)">
           Company
@@ -107,9 +111,13 @@ export const Footercontent = () => {
         
       <Box sx={{ marginTop: "2rem", position:"absolute", bottom:"0"}}>
         <Typography variant="body2">
-          © {new Date().getFullYear()} Fast ab. All rights reserved.
+          © {new Date().getFullYear()} Fast AB. All rights reserved.
         </Typography>
+       
       </Box>
+      </>) : (
+        <Footerdropdown/>
+    )}
       </Box>
   );
 }

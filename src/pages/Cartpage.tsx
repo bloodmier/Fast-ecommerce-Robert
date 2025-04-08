@@ -89,8 +89,10 @@ export const Cartpage = () => {
         sx={{
           textAlign: "center",
           backgroundColor: "white",
-          width: "800px",
-          height: "300px",
+          width:"100%",
+          maxWidth: "800px",
+          height: "auto",
+          padding:"0.5rem",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -102,7 +104,7 @@ export const Cartpage = () => {
           sx={{
             border: "1px solid #626262",
             width: "95%",
-            height: "90%",
+            height: "95%",
             borderRadius: "15px",
             display: "flex",
             justifyContent: "center",
@@ -110,7 +112,7 @@ export const Cartpage = () => {
             flexDirection: "column",
           }}
         >
-          <Typography variant="h5" gutterBottom>
+          <Typography variant="h5" gutterBottom sx={{padding:"0.5rem"}}>
             Your cart is empty, and you can't proceed to payment yet. To move
             forward, you'll need to add products to your cart. Take a moment to
             browse our selection and find the items you need. Once you've added
@@ -134,13 +136,14 @@ export const Cartpage = () => {
     <Box
       sx={{
         padding: "20px",
+        width: "90dvw",
         maxWidth: "800px",
         margin: "auto",
         backgroundColor: "#f9f9f9",
         borderRadius: "10px",
         boxShadow: "0px 4px 8px rgba(0,0,0,0.1)",
-        marginTop: "25px",
-        width: "100%",
+        marginTop: {xs:"70px", sm:"25px"},
+        
         transition: "all 1s ease-in-out",
       }}
     >

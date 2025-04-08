@@ -68,8 +68,8 @@ export const Productspage = () => {
         backgroundColor: "var(--surface-color)",
         borderRadius: "15px",
         boxshadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-        marginTop: "25px",
-        marginBottom: "25px",
+        marginTop: {xs:"70px", sm:"25px"},
+        marginBottom: {xs:"5px", sm:"25px"},
       }}
     > 
       <Box
@@ -116,7 +116,7 @@ export const Productspage = () => {
                 borderRadius: 2,
                 padding: 2,
                 textAlign: "center",
-                width: "15rem",
+                width: {xs:"100%", sm:"15rem"},
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
@@ -148,7 +148,7 @@ export const Productspage = () => {
                 variant="outlined"
                 value={quantities[product.id] || 1}
                 onChange={(e) => handleQuantitychange(e, product.id)}
-                sx={{ width: "100%" }}
+                sx={{ width: "100%",zIndex:0 }}
               />
               <Box
                 sx={{

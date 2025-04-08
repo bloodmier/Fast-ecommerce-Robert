@@ -1,8 +1,8 @@
  
 import axios from "axios"
  
-export const getdata = async <T>(url:string):Promise<T>=> {
-    const response = await axios.get<T>(url)
+export const getdata = async <T>(url:string, options?:object):Promise<T>=> {
+    const response = await axios.get<T>(url,options)
     return response.data
 }
 

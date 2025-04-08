@@ -8,6 +8,7 @@ import logoimg from "../assets/logo.png";
 import productsimg from "../assets/products-icon.png";
 import productsimghover from "../assets/products-icon-hover.png";
 import { Footercontent } from "../components/footercontent";
+import { Searchapi } from "../components/Searchapi";
 
 export const Layout = () => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
@@ -19,7 +20,8 @@ export const Layout = () => {
   const [scrolling, setScrolling] = useState(false);
   const [active, setActive] = useState<boolean>(false);
   const location = useLocation(); 
-  
+  const topValue = !scrolling ? "4rem" : "0";
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
@@ -60,16 +62,54 @@ export const Layout = () => {
 
   return (
     <>
-      <header
-        style={{
+   {!scrolling && <Box sx={{display: {xs:"block",sm:"none"}, height:"4rem", position:"fixed", backgroundColor:"var(--primary-color)", width:"100%",zIndex:2,}}>
+     <Box
+          sx={{
+            zIndex: "2",
+            position: "absolute",
+            left: "50%",
+            transform:"translateX(-50%)",
+            top: "0px",
+            height: "4rem",
+            display: {xs:"flex",sm:"none"},
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "0.5rem",
+            heigt:"4rem"
+          }}
+        >
+          <Link to={"/"}>
+            <img
+              src={logoimg}
+              style={{
+                height: "3rem",
+              }}
+            ></img>
+          </Link>
+          <Typography
+            style={{
+              color: "var(--accent-color)",
+              fontSize: "3.4rem",
+              fontFamily: "Red Rose, serif",
+              fontWeight: 600,
+            }}
+          >
+            Fast
+          </Typography>
+        </Box>
+        </Box>}
+      <Box
+      component="header"
+        sx={{
           position: "fixed",
           zIndex: "1",
           display: "flex",
           justifyContent: "center",
+          top: {xs:topValue, sm:"0rem"},
           background: !scrolling
             ? "var(--primary-color)"
             : "linear-gradient(to bottom, var(--primary-color) 20%, rgba(34, 18, 69, 0) 150%)",
-          transition: "background 0.3s ease",
+          transition: "background 0.5s ease",
           height: "4rem",
           boxShadow: !scrolling ? "0px 4px 6px rgba(0, 0, 0, 0.1)" : "none",
           width: "100dvw",
@@ -92,7 +132,7 @@ export const Layout = () => {
             left: "30px",
             top: "10px",
             height: "3rem",
-            display: "flex",
+            display: {xs:"none",sm:"flex"},
             justifyContent: "center",
             alignItems: "center",
             gap: "0.5rem",
@@ -117,8 +157,7 @@ export const Layout = () => {
             Fast
           </Typography>
         </Box>
-
-        
+            <Searchapi/>
           <NavLink
             to={"/products"}
           >
@@ -151,7 +190,7 @@ export const Layout = () => {
             )}
           </NavLink>
         </nav>
-      </header>
+      </Box>
       <main
         style={{
           flex: "1",
@@ -164,19 +203,24 @@ export const Layout = () => {
       >
         <Outlet />
       </main>
-      <footer
+      <Box
+      component="footer"
+      position="relative"
         style={{
           textAlign: "center",
           boxShadow: `
       -110px -20px 30px -25px rgba(0, 0, 0, 0.4), 
       110px -20px 30px -25px rgba(0, 0, 0, 0.4)
     `,
-          height: "12rem",
+          minHeight:"12rem",
+          height: "auto",
+          maxHeight: "auto",
           background: "var(--faded-color)",
         }}
       >
+
         <Footercontent></Footercontent>
-      </footer>
+      </Box>
     </>
   );
 };
