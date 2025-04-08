@@ -3,8 +3,6 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 export const Footerdropdown = () => {
 
-
-
     return (
         <Box sx={{ width: "100%", textAlign: "center", paddingTop: "20px", backgroundColor:"transparent" }}>
           <Accordion sx={{backgroundColor:"transparent", color:"white", textAlign:"left"}}>
