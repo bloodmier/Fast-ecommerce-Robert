@@ -1,4 +1,4 @@
-import { Accordion, AccordionDetails, AccordionSummary, Box, Link, MenuItem, Select, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Box, Link, Typography } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 export const Footerdropdown = () => {
