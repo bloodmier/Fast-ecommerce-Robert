@@ -64,11 +64,11 @@ export const CustomerForm = ({onsubmit}: IpropsCustomerForm) => {
           justifyContent: "center",
           alignItems: "center",
           gap: 2,
-          width: "calc(100% - 50px)",
+          width: {xs:'100%', sm:"calc(100% - 50px)"},
           height: "auto",
           border: "1px solid #aba5a5",
           borderRadius: "15px",
-          margin: "25px",
+          margin: {xs:"unset",sm:"25px"},
         }}
       >
         <Typography
@@ -80,8 +80,8 @@ export const CustomerForm = ({onsubmit}: IpropsCustomerForm) => {
         <Box
           sx={{
             display: "flex",
-            flexDirection: "row",
-            gap: "2rem",
+            flexDirection: {xs:"column", sm:"row"},
+            gap: "1rem",
             width: "90%",
             height: "auto",
           }}
@@ -94,7 +94,7 @@ export const CustomerForm = ({onsubmit}: IpropsCustomerForm) => {
             onChange={handleChange}
             variant="outlined"
             required
-            sx={{ flex: 1 }}
+            sx={{flex:{xs:1, sm:"unset"}, width:"100%" }}
           />
           <TextField
             type="text"
@@ -104,14 +104,14 @@ export const CustomerForm = ({onsubmit}: IpropsCustomerForm) => {
             onChange={handleChange}
             variant="outlined"
             required
-            sx={{ flex: 1 }}
+            sx={{ flex:{xs:1, sm:"unset"}, width:"100%" }}
           />
         </Box>
         <Box
           sx={{
             display: "flex",
-            flexDirection: "row",
-            gap: "2rem",
+            flexDirection: {xs:"column", sm:"row"},
+            gap: "1rem",
             width: "90%",
             height: "auto",
           }}
@@ -124,7 +124,7 @@ export const CustomerForm = ({onsubmit}: IpropsCustomerForm) => {
             onChange={handleChange}
             variant="outlined"
             required
-            sx={{ flex: 1 }}
+            sx={{flex:{xs:1, sm:"unset"}, width:"100%" }}
           />
           <TextField
             type="text"
@@ -139,14 +139,14 @@ export const CustomerForm = ({onsubmit}: IpropsCustomerForm) => {
             }}
             variant="outlined"
             required
-            sx={{ flex: 1 }}
+            sx={{ flex:{xs:1, sm:"unset"}, width:"100%"}}
           />
         </Box>
         <Box
           sx={{
             display: "flex",
-            flexDirection: "row",
-            gap: "2rem",
+            flexDirection: {xs:"column", sm:"row"},
+            gap: "1rem",
             width: "90%",
             height: "auto",
           }}
@@ -159,7 +159,7 @@ export const CustomerForm = ({onsubmit}: IpropsCustomerForm) => {
             onChange={handleChange}
             variant="outlined"
             required
-            sx={{ width: "70%" }}
+            sx={{ width:{xs:"100%",sm:"70%"} }}
           />
           <TextField
             type="text"
@@ -169,14 +169,14 @@ export const CustomerForm = ({onsubmit}: IpropsCustomerForm) => {
             onChange={handleChange}
             variant="outlined"
             required
-            sx={{ flex: 1 }}
+            sx={{ flex:{xs:1, sm:"unset"}, width:{xs:"100%",sm:"30%"} }}
           />
         </Box>
         <Box
           sx={{
             display: "flex",
-            flexDirection: "row",
-            gap: "2rem",
+            flexDirection: {xs:"column", sm:"row"},
+            gap: "1rem",
             width: "90%",
             height: "auto",
             marginBottom: "2rem",
@@ -190,9 +190,9 @@ export const CustomerForm = ({onsubmit}: IpropsCustomerForm) => {
             onChange={handleChange}
             variant="outlined"
             required
-            sx={{ flex: "1" }}
+            sx={{ flex:{xs:1, sm:"unset"}, width:"100%" }}
           />
-          <FormControl sx={{ flex: "1" }}>
+          <FormControl sx={{ flex:{xs:1, sm:"unset"}, width:"100%" }}>
             <InputLabel id="select-label" sx={{ backgroundColor: "white" }}>
               Country
             </InputLabel>

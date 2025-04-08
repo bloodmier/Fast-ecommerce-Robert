@@ -7,7 +7,6 @@ export const Footerdropdown = () => {
 
     return (
         <Box sx={{ width: "100%", textAlign: "center", paddingTop: "20px", backgroundColor:"transparent" }}>
-          {/* Company Section */}
           <Accordion sx={{backgroundColor:"transparent", color:"white", textAlign:"left"}}>
             <AccordionSummary expandIcon={<ExpandMoreIcon sx={{color:"var(--accent-color)" }}/>}>
               <Typography variant="h6" color="var(--accent-color)">
@@ -37,8 +36,6 @@ export const Footerdropdown = () => {
               </Box>
             </AccordionDetails>
           </Accordion>
-    
-          {/* Customerservice Section */}
           <Accordion sx={{backgroundColor:"transparent",color:"white", textAlign:"left"}}>
             <AccordionSummary expandIcon={<ExpandMoreIcon sx={{color:"var(--accent-color)" }}/>}>
               <Typography variant="h6" color="var(--accent-color)">
@@ -87,7 +84,7 @@ export const Footerdropdown = () => {
               </Box>
             </AccordionDetails>
           </Accordion>
-          <Box sx={{ marginTop: "1rem", bottom:"0",}}>
+          <Box zIndex={1} sx={{ marginTop: "1rem", bottom:"0", position:"relative"}}>
             <Typography variant="body2" sx={{textAlign:"center"}} >
           © {new Date().getFullYear()} Fast AB. All rights reserved.
              </Typography>

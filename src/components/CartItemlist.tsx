@@ -103,9 +103,9 @@ export const Cartitemlist = ({
 
       <Divider sx={{ marginBottom: "20px" }} />
 
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead>
+      <TableContainer component={Paper} sx={{width:"100%"}}>
+        <Table sx={{width:"100%"}}>
+          <TableHead >
             <TableRow>
               <TableCell></TableCell>
               <TableCell>Name</TableCell>
