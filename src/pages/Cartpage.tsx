@@ -98,6 +98,7 @@ export const Cartpage = () => {
           alignItems: "center",
           flexDirection: "column",
           borderRadius: "15px",
+          marginTop: {xs:"70px", sm:"25px"},
         }}
       >
         <Box
