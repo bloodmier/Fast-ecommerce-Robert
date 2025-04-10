@@ -12,21 +12,29 @@ export const Productpage = () => {
   const productId = parseInt(id || "");
   const { products } = useProducts();
   const { dispatch } = useContext(CartContext);
-  const [quantity, setQuantity] = useState(1);
+  const [quantities, setQuantities] = useState<{ [id: number]: number }>({});
   const product = products.find((p) => p.id === productId);
 
   const handleaddingcartitem = (product: IProduct) => {
     const { id, name, price, image } = product;
+    const quantity = quantities[product.id] || 1;
     const cartItem: IcartItem = { id, name, price, quantity, image };
     dispatch({
       type: IActiontype.ADD_CARTITEM,
       payload: JSON.stringify(cartItem),
     });
-    setQuantity(1);
+    setQuantities({});
   };
 
-  const handleQuantitychange = (e: ChangeEvent<HTMLInputElement>) => {
-    setQuantity(+e.target.value);
+  const handleQuantitychange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    id: number
+  ) => {
+    const value = Math.max(1, +e.target.value);
+    setQuantities((Quantities) => ({
+      ...Quantities,
+      [id]: value,
+    }));
   };
 
   if (!product) {
@@ -54,7 +62,7 @@ export const Productpage = () => {
         width: "30rem",
         backgroundColor: "white",
         borderRadius: "15px",
-        marginTop: "25px",
+        marginTop: { xs: "70px", sm: "25px" },
       }}
     >
       <img
@@ -83,20 +91,81 @@ export const Productpage = () => {
           Stock: {product.stock > 0 ? product.stock : "Out of stock"}
         </Typography>
       </Box>
-      <TextField
-        label="Antal"
-        type="number"
-        size="small"
-        variant="outlined"
-        defaultValue={1}
-        sx={{ width: "100%" }}
-        InputProps={{
-          inputProps: {
-            min: 1,
-          },
+      <Box
+        sx={{
+          display: "flex",
+          position: "relative",
+          justifyContent: "center",
+          alignItems: "stretch",
         }}
-        onChange={handleQuantitychange}
-      />
+      >
+        <TextField
+          label="Count"
+          type="number"
+          variant="outlined"
+          value={quantities[product.id] || 1}
+          onChange={(e) => handleQuantitychange(e, product.id)}
+          sx={{
+            width: "80dvw",
+            maxWidth: "30rem",
+            zIndex: 0,
+            position: "relative",
+          }}
+        />
+
+        <Button
+          color="success"
+          sx={{
+            display: { xs: "flex", sm: "none" },
+            position: "absolute",
+            right: "40px",
+            top: "50%",
+            height: "100%",
+            transform: "translateY(-50%)",
+            minWidth: "2.5rem",
+            borderRadius: "0",
+            fontSize: "1.3rem",
+            backgroundColor: "#35b84f27",
+            borderLeft: "1px solid var(--muted-text-color)",
+          }}
+          onClick={() =>
+            handleQuantitychange(
+              {
+                target: { value: String((quantities[product.id] || 1) + 1) },
+              } as ChangeEvent<HTMLInputElement>,
+              product.id
+            )
+          }
+        >
+          +
+        </Button>
+        <Button
+          color="error"
+          sx={{
+            display: { xs: "flex", sm: "none" },
+            position: "absolute",
+            right: "0px",
+            top: "50%",
+            height: "100%",
+            transform: "translateY(-50%)",
+            minWidth: "2.5rem",
+            fontSize: "1.3rem",
+            backgroundColor: "#b8353527",
+            borderLeft: "1px solid var(--muted-text-color)",
+            borderRadius: "0 5px 5px 0",
+          }}
+          onClick={() =>
+            handleQuantitychange(
+              {
+                target: { value: String((quantities[product.id] || 1) - 1) },
+              } as ChangeEvent<HTMLInputElement>,
+              product.id
+            )
+          }
+        >
+          -
+        </Button>
+      </Box>
       <Button
         variant="contained"
         color="success"

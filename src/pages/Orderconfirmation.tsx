@@ -73,11 +73,12 @@ export const Orderconfirmation = () => {
       sx={{
         display: "flex",
         flexDirection: "column",
-        borderRadius: "15px",
+        borderRadius: "20px",
         maxWidth: "800px",
         width: "100%",
         backgroundColor: "white",
         margin: "25px",
+        marginTop: {xs:"70px", sm:"25px"},
         padding: "15px",
         gap: "1.4rem",
       }}
