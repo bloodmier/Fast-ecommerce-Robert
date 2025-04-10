@@ -213,9 +213,6 @@ export const Orderconfirmation = () => {
                   <Typography align="right">
                     {item.unit_price.toFixed(2)} SEK
                   </Typography>
-                  <Typography align="right">
-                    {(item.quantity * item.unit_price).toFixed(2)} SEK
-                  </Typography>
                 </Box>
               ))}
               <Box
