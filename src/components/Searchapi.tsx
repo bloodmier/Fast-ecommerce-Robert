@@ -5,7 +5,6 @@ import { SerchapiGoogle } from "../service/Searchservice";
 import { Igoogleitem, IgoogleSearch } from "../models/Igoogleitem";
 import { useProducts } from "../hooks/useProducts";
 import { IProduct } from "../models/Iproduct";
-import { Loading } from "./Loading";
 import { Box, InputBase, IconButton } from "@mui/material";
 export const Searchapi = () => {
   const [searchinput, setSearchinput] = useState<string>("");
@@ -17,9 +16,6 @@ export const Searchapi = () => {
   const { products } = useProducts();
   const [isloading, setIsloading] = useState<boolean>(false);
 
- 
-
-
   const extractCode = (text: string) => {
     if (text.toLowerCase().includes("milwaukee")) {
       const match = text.match(/M\d{2}\s[A-Z]+-\d+/);
@@ -30,14 +26,15 @@ export const Searchapi = () => {
     }
   };
 
-  const rightproducts: IProduct[] = searchItems.map((i) => {
-    const apicode = extractCode(i.title);
-    const matchedproduct = products.find((p) => {
-      return apicode ? p.name.includes(apicode) : null;
-    });
-    return matchedproduct || null;
-  }).filter((p) => p !== null);
-
+  const rightproducts: IProduct[] = searchItems
+    .map((i) => {
+      const apicode = extractCode(i.title);
+      const matchedproduct = products.find((p) => {
+        return apicode ? p.name.includes(apicode) : null;
+      });
+      return matchedproduct || null;
+    })
+    .filter((p) => p !== null);
 
   const handleNoresults = () => {
     if (inputRef.current) inputRef.current.focus();
@@ -92,7 +89,13 @@ export const Searchapi = () => {
   };
 
   return (
-    <Box sx={{ position: "absolute", right: {xs:"unset", sm:"100px"}, left: {xs:"60px", sm:"unset"} }}>
+    <Box
+      sx={{
+        position: "absolute",
+        right: { xs: "unset", sm: "100px" },
+        left: { xs: "10px", sm: "unset" },
+      }}
+    >
       <Box
         sx={{
           display: "flex",
@@ -105,9 +108,8 @@ export const Searchapi = () => {
           padding: 0,
         }}
         onBlur={handleBlur}
-        onSubmit={(e) => e.preventDefault()} 
+        onSubmit={(e) => e.preventDefault()}
       >
-
         <InputBase
           inputRef={inputRef}
           placeholder={isFocused ? "Type to Search..." : ""}
@@ -117,11 +119,11 @@ export const Searchapi = () => {
           onBlur={handleBlur}
           sx={{
             position: "absolute",
-            right: {xs:"unset", sm:"0"},
-            left: {xs:"10px", sm:"unset"},
+            right: { xs: "unset", sm: "0" },
+            left: { xs: "10px", sm: "unset" },
             zIndex: 1001,
             height: isFocused ? "50px" : "0px",
-            width: isFocused ? "300px" : "0px",
+            width: isFocused ? { xs: "280px", sm: "300px" } : "0px",
             border: "none",
             padding: "10px",
             fontSize: "18px",
@@ -131,7 +133,8 @@ export const Searchapi = () => {
             transition: "all 0.5s ease-in-out",
             backgroundColor: isFocused ? "white" : "transparent",
             color: "#000000",
-            paddingRight: "40px",
+            paddingRight: {xs:"10px",sm:"40px"},
+            paddingLeft:{xs:"40px",sm:"10px"} ,
             borderBottom: isFocused ? "1px solid rgba(255,255,255,.5)" : "none",
           }}
         />
@@ -148,23 +151,27 @@ export const Searchapi = () => {
             cursor: "pointer",
             borderRadius: "50%",
             position: "absolute",
-            right: "2px",
-            backgroundColor: isFocused ? "var(--accent-color)" : "transparent",
+            right: { xs: "unset", sm: "2px" },
+            left: { xs: "10px", sm: "unset" },
+            transform: "translateY(-50%)", 
+            top:"50%",
+
+            backgroundColor: isFocused ? {xs:"transparent",sm:"var(--accent-color)"} : "transparent",
           }}
         >
-          {!isloading ? (
             <SearchIcon
               sx={{
                 transition: "background-color 0.3s ease-in, 0.5s ease-out",
                 fontSize: "2.3rem",
-                color: isFocused ? "black" : "var(--surface-color)",
+                color: isFocused
+                  ? "var(--muted-text-color)"
+                  : "var(--surface-color)",
+                
               }}
             />
-          ) : (
-            <Loading />
-          )}
         </IconButton>
         <Searchdropdownbox
+          isLoading={isloading}
           onClick={handleNoresults}
           isOpen={searchDropdown}
           onClose={() => {
@@ -177,4 +184,3 @@ export const Searchapi = () => {
     </Box>
   );
 };
-

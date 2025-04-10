@@ -1,19 +1,21 @@
 import "../sass/Searchdropdown.scss";
 import Notfound from "../assets/Img-not-found.jpg";
 import { IProduct } from "../models/Iproduct";
-import { Box, List, ListItem, ListItemAvatar, Avatar, ListItemText, Typography } from "@mui/material";
+import { Box, List, ListItem, ListItemAvatar, ListItemText, Typography } from "@mui/material";
+import { Loading } from "./Loading";
 interface ISearchdropdownbox {
   products: IProduct[];
   isOpen: boolean;
   onClose: () => void;
   onClick: () => void;
+  isLoading:boolean;
 }
 
 export const Searchdropdownbox = ({
   isOpen,
   onClose,
   products,
-  onClick
+  onClick,isLoading
 }: ISearchdropdownbox) => {
 
 
@@ -39,9 +41,10 @@ export const Searchdropdownbox = ({
               position: "absolute",
               top: "32px",
               right: {xs:"unset", sm:0},
-              left:{xs:"-60px", sm:"unset"},
-              width: { xs: "100dvw", sm: "400px" }, // Responsiv bredd
+              left:{xs:"-10px", sm:"unset"},
+              width: { xs: "100dvw", sm: "400px" }, 
               maxWidth: { xs: "none", sm: "400px" },
+              height:{xs:"400px",sm:"auto"},
               backgroundColor: "white",
               zIndex: 1000,
               borderRadius: "4px",
@@ -49,11 +52,12 @@ export const Searchdropdownbox = ({
               padding: "10px",
               animation: "fadeSlideIn 0.5s ease-out",
               boxSizing: "border-box",
-              overflow: "hidden",
+              overflow: "auto",
             }}
             onMouseDown={(e) => e.stopPropagation()}
           >
-            {products && products.length > 0 ? (
+            {isLoading ? <Loading/> : 
+            products && products.length > 0 ? (
               <List sx={{ width: "100%", maxWidth: "400px", padding: 0 }}>
                 {products.map((rightproduct) => {
                   if (!rightproduct) return null;
@@ -72,10 +76,10 @@ export const Searchdropdownbox = ({
                         }}
                       >
                         <ListItemAvatar>
-                          <Avatar
+                          <img
                             src={rightproduct.image || Notfound}
                             alt={rightproduct.name}
-                            sx={{ width: "3rem", height: "3rem" }}
+                            style={{ width: "3rem", height: "3rem" }}
                           />
                         </ListItemAvatar>
                         <ListItemText primary={rightproduct.name} />
